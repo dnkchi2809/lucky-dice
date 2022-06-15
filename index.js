@@ -5,8 +5,15 @@ const path = require('path');
 // import mongoose
 const mongoose = require('mongoose');
 // import model
-const userModel = require('./app/models/userModel')
-const DiceHistoryModel = require('./app/models/diceHistoryModel')
+const userModel = require('./app/models/userModel');
+const DiceHistoryModel = require('./app/models/diceHistoryModel');
+const prizeModel = require('./app/models/prizeModel');
+const voucherModel = require('./app/models/voucherModel')
+
+const userRouter = require("./app/routers/userRouter");
+const diceHistoryRouter = require("./app/routers/diceHistoryRouter");
+const prizeRouter = require("./app/routers/prizeRouter");
+const voucherRouter = require("./app/routers/voucherRouter");
 
 // khởi tạo app
 const app = express();
@@ -49,6 +56,10 @@ app.use("/view", (request, response) => {
     response.sendFile(path.join(__dirname + "/view/index.html"))
 })
 
+app.use("/", userRouter);
+app.use("/", diceHistoryRouter);
+app.use("/", prizeRouter);
+app.use("/", voucherRouter);
 
 // chạy app
 app.listen(port, () => {

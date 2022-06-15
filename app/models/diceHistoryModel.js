@@ -6,11 +6,16 @@ const schema = mongoose.Schema;
 
 const DiceHistorySchema = new schema({
     _id: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
     },
     user: {
         type: mongoose.Types.ObjectId,
+        required :  true,
         ref: "User"
+    },
+    dice : {
+        type: Number,
+        required :  true
     },
     createdAt: {
         type: Date,

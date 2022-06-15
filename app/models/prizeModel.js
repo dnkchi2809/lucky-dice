@@ -4,22 +4,18 @@ const mongoose = require('mongoose');
 // khởi tạo schema
 const schema = mongoose.Schema;
 
-const UserSchema = new schema({
+const prizeSchema = new schema({
     _id: {
         type: mongoose.Types.ObjectId,
     },
-    username: {
+    name: {
         type: String,
         unique: true,
         required: true
     },
-    firstname: {
+    description: {
         type: String,
-        required: true
-    },
-    lastname: {
-        type: String,
-        required: true
+        required: false
     },
     createdAt: {
         type: Date,
@@ -32,4 +28,4 @@ const UserSchema = new schema({
 })
 
 //export thành một modules
-module.exports = mongoose.model("User", UserSchema)
+module.exports = mongoose.model("Prize", prizeSchema)

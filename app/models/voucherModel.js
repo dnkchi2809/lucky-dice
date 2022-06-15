@@ -4,22 +4,22 @@ const mongoose = require('mongoose');
 // khởi tạo schema
 const schema = mongoose.Schema;
 
-const UserSchema = new schema({
+const voucherSchema = new schema({
     _id: {
         type: mongoose.Types.ObjectId,
     },
-    username: {
+    code: {
         type: String,
         unique: true,
         required: true
     },
-    firstname: {
-        type: String,
+    discount: {
+        type: Number,
         required: true
     },
-    lastname: {
+    note : {
         type: String,
-        required: true
+        required: false
     },
     createdAt: {
         type: Date,
@@ -32,4 +32,4 @@ const UserSchema = new schema({
 })
 
 //export thành một modules
-module.exports = mongoose.model("User", UserSchema)
+module.exports = mongoose.model("Voucher", voucherSchema)
