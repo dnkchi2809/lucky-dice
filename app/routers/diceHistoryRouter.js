@@ -2,7 +2,14 @@ const express = require("express");
 
 const router = express.Router();
 
-const {createDiceHistory, getAllDiceHistory, getDiceHistoryById, updateDiceHistoryById, deleteDiceHistoryById} = require("../controllers/diceHistoryController")
+const {
+    createDiceHistory,
+    getAllDiceHistory,
+    getDiceHistoryById,
+    updateDiceHistoryById,
+    deleteDiceHistoryById,
+    getDiceHistoryByUsername
+} = require("../controllers/diceHistoryController")
 
 router.get("/dice-histories", getAllDiceHistory);
 
@@ -13,5 +20,7 @@ router.post("/dice-histories", createDiceHistory);
 router.put("/dice-histories/:diceHistoryId", updateDiceHistoryById);
 
 router.delete("/dice-histories/:diceHistoryId", deleteDiceHistoryById);
+
+router.get("/devcamp-lucky-dice/dice-history", getDiceHistoryByUsername);
 
 module.exports = router;

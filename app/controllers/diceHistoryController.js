@@ -1,5 +1,7 @@
 const DiceHistorySchema = require("../models/diceHistoryModel");
 
+const UserSchema = require("../models/userModel");
+
 const mongoose = require("mongoose");
 
 const createDiceHistory = (req,res) => {
@@ -43,7 +45,16 @@ const createDiceHistory = (req,res) => {
 }
 
 const getAllDiceHistory = (req,res) => {
-    DiceHistorySchema.find((err, data) => {
+    let condition = {};
+
+    let userRequest = req.query.user;
+
+    if(userRequest){
+        condition.user = userRequest
+    }
+
+
+    DiceHistorySchema.find(condition, (err, data) => {
         if (err) {
             res.status(500).json({
                 status: "EROR 500: Internal Server Error",
@@ -154,10 +165,51 @@ const deleteDiceHistoryById = (req,res) => {
     })
 }
 
+const getDiceHistoryByUsername = (req, res) => {
+    let condition = {};
+    let conditionUserId = {};
+
+    let usernameRequest = req.query.username;
+    console.log(usernameRequest);
+
+    if(usernameRequest){
+        condition.username = usernameRequest
+    }
+
+    UserSchema.find(condition, (err, data) => {
+        if (err) {
+            res.status(500).json({
+                status: "EROR 400: Bad request",
+                message: err.message
+            })
+        }
+        else {
+            //console.log(data);
+            conditionUserId.user = data;
+            console.log(conditionUserId.user);
+            DiceHistorySchema.find(conditionUserId, (err, data) => {
+                if (err) {
+                    res.status(500).json({
+                        status: "EROR 500: Internal Server Error",
+                        message: err.message
+                    })
+                }
+                else {
+                    res.status(200).json({
+                        status: "Success: GET All Dice History success",
+                        data: data
+                    })
+                }
+            })
+        }
+    })
+}
+
 module.exports = {
     createDiceHistory,
     getAllDiceHistory,
     getDiceHistoryById,
     updateDiceHistoryById,
-    deleteDiceHistoryById
+    deleteDiceHistoryById,
+    getDiceHistoryByUsername
 }

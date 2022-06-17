@@ -8,12 +8,17 @@ const mongoose = require('mongoose');
 const userModel = require('./app/models/userModel');
 const DiceHistoryModel = require('./app/models/diceHistoryModel');
 const prizeModel = require('./app/models/prizeModel');
-const voucherModel = require('./app/models/voucherModel')
+const voucherModel = require('./app/models/voucherModel');
+const voucherHistoryModel = require('./app/models/voucherHistoryModel');
+const prizeHistoryModel = require('./app/models/prizeHistoryModel')
 
 const userRouter = require("./app/routers/userRouter");
 const diceHistoryRouter = require("./app/routers/diceHistoryRouter");
 const prizeRouter = require("./app/routers/prizeRouter");
 const voucherRouter = require("./app/routers/voucherRouter");
+const prizeHistoryRouter = require("./app/routers/prizeHistoryRouter");
+const voucherHistoryRouter = require("./app/routers/voucherHistoryRouter");
+const diceRouter = require("./app/routers/diceRouter");
 
 // khởi tạo app
 const app = express();
@@ -60,6 +65,9 @@ app.use("/", userRouter);
 app.use("/", diceHistoryRouter);
 app.use("/", prizeRouter);
 app.use("/", voucherRouter);
+app.use("/", prizeHistoryRouter);
+app.use("/", voucherHistoryRouter);
+app.use("/", diceRouter);
 
 // chạy app
 app.listen(port, () => {
