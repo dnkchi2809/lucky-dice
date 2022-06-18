@@ -83,7 +83,7 @@
                 </div>
                 <div class="row form-group">
                     <div class="col-12">
-                        <img src="LuckyDiceImages/no-present.jpg" id="present-id" width="100%"/>
+                        <img src="LuckyDiceImages/no-present.jpg" id="present-id" width="100%" />
                     </div>
                 </div>
             </div>
@@ -108,26 +108,6 @@
                         </tr>
                     </thead>
                     <tbody id="tbody-id">
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>6</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>4</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>4</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -136,7 +116,7 @@
 </body>
 <script>
     "use strict";
-    const vBASE_URL = "http://42.115.221.44:8080/devcamp-lucky-dice";
+    const vBASE_URL = "/devcamp-lucky-dice";
     const gREQUEST_STATUS_OK = 200;
     const gREQUEST_READY_STATUS_FINISH_AND_OK = 4;
     const vUTF8_TEXT_APPLICATION_HEADER = "application/json;charset=UTF-8";
@@ -228,35 +208,37 @@
     function handlePrizeHistory(paramUserPrizeHistoryObj) {
         var vTableBody = document.getElementById("tbody-id");
         vTableBody.innerHTML = "";
-        for (var i = 0; i < paramUserPrizeHistoryObj.prizes.length; i++) {
+        for (var i = 0; i < paramUserPrizeHistoryObj.data.length; i++) {
             var vNewRows = vTableBody.insertRow(-1);
             var vNewNumberCells = vNewRows.insertCell(0);
             var vNewPrizeCells = vNewRows.insertCell(1);
             vNewNumberCells.innerHTML = i + 1;
-            vNewPrizeCells.innerHTML = paramUserPrizeHistoryObj.prizes[i];
+            getPrizeInfo(vNewPrizeCells, paramUserPrizeHistoryObj.data[i].prize);
+            //vNewPrizeCells.innerHTML = prizeInfo.name;
         }
     }
     function handleVoucherHistory(paramUserVoucherHistoryObj) {
 
         var vTableBody = document.getElementById("tbody-id");
         vTableBody.innerHTML = "";
-        for (var i = 0; i < paramUserVoucherHistoryObj.vouchers.length; i++) {
+        for (var i = 0; i < paramUserVoucherHistoryObj.data.length; i++) {
             var vNewRows = vTableBody.insertRow(-1);
             var vNewNumberCells = vNewRows.insertCell(0);
             var vNewDiceCells = vNewRows.insertCell(1);
-            vNewNumberCells.innerHTML = paramUserVoucherHistoryObj.vouchers[i].maVoucher;
-            vNewDiceCells.innerHTML = paramUserVoucherHistoryObj.vouchers[i].phanTramGiamGia;
+            getVoucherInfo(vNewNumberCells, vNewDiceCells, paramUserVoucherHistoryObj.data[i].voucher)
+            //vNewNumberCells.innerHTML = paramUserVoucherHistoryObj.data[i].voucher;
+            //vNewDiceCells.innerHTML = paramUserVoucherHistoryObj.data[i].voucher;
         }
     }
     function handleDiceHistory(paramUserDiceHistoryObj) {
         var vTableBody = document.getElementById("tbody-id");
         vTableBody.innerHTML = "";
-        for (var i = 0; i < paramUserDiceHistoryObj.dices.length; i++) {
+        for (var i = 0; i < paramUserDiceHistoryObj.data.length; i++) {
             var vNewRows = vTableBody.insertRow(-1);
             var vNewNumberCells = vNewRows.insertCell(0);
             var vNewDiceCells = vNewRows.insertCell(1);
             vNewNumberCells.innerHTML = i + 1;
-            vNewDiceCells.innerHTML = paramUserDiceHistoryObj.dices[i];
+            vNewDiceCells.innerHTML = paramUserDiceHistoryObj.data[i].dice;
 
         }
     }
@@ -341,6 +323,28 @@
         }
     }
 
+    function getPrizeInfo (paramCell, paramPrizeId) {
+        $.ajax ({
+            url : "/prizes/" + paramPrizeId,
+            method : "GET",
+            success : function (res){
+                console.log(res)
+                paramCell.innerHTML = res.data.name;
+            } 
+        })
+    }
+
+    function getVoucherInfo (paramCellVoucherId,paramCellMaGiamGia, paramVoucherId) {
+        $.ajax ({
+            url : "/vouchers/" + paramVoucherId,
+            method : "GET",
+            success : function (res){
+                console.log(res)
+                paramCellVoucherId.innerHTML = res.data.code;
+                paramCellMaGiamGia.innerHTML = res.data.discount + "%";
+            } 
+        })
+    }
 </script>
 
 </html>
