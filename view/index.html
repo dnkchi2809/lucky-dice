@@ -126,6 +126,8 @@
         lastname: "",
     }
     function onBtnNemClick() {
+        document.getElementById("img-inp").src = "LuckyDiceImages/diceRound.gif";
+
         getUserInfor(vUserData);
         var vCheckUserInfor = validateUser(vUserData);
         if (vCheckUserInfor) {
@@ -136,7 +138,7 @@
             vXmlHttp.onreadystatechange = function () {
                 if (vXmlHttp.status == gREQUEST_STATUS_OK && vXmlHttp.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK) {
                     var vUserDiceObj = JSON.parse(vXmlHttp.responseText);
-                    handleDiceEvent(vUserDiceObj);
+                    setTimeout(() => {handleDiceEvent(vUserDiceObj)}, 2000)
                 }
             }
         }
@@ -210,7 +212,7 @@
         }
     }
     function handleVoucherHistory(paramUserVoucherHistoryObj) {
-        
+
         var vTableBody = document.getElementById("tbody-id");
         vTableBody.innerHTML = "";
         for (var i = 0; i < paramUserVoucherHistoryObj.data.length; i++) {
@@ -257,6 +259,7 @@
         return true;
     }
     function handleDiceEvent(paramUserDiceObj) {
+
         var vResult = document.getElementById("p-result-inp");
         if (paramUserDiceObj.dice === 1) {
             document.getElementById("img-inp").src = "LuckyDiceImages/1.png";
@@ -291,7 +294,7 @@
         }
         else {
             vVoucherResult.innerHTML = "Không có mã voucher!!"
-            vDiscountResult.innerHTML = "không có discount!!"
+            vDiscountResult.innerHTML = "Không có mã giảm giá!!"
         }
 
         var vImgPresent = document.getElementById("present-id");
