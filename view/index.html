@@ -136,14 +136,12 @@
             vXmlHttp.onreadystatechange = function () {
                 if (vXmlHttp.status == gREQUEST_STATUS_OK && vXmlHttp.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK) {
                     var vUserDiceObj = JSON.parse(vXmlHttp.responseText);
-                    console.log(vUserDiceObj);
                     handleDiceEvent(vUserDiceObj);
                 }
             }
         }
     }
     function onBtnVoucherHistoryClick() {
-        console.log("Nút voucher History được ấn");
         document.getElementById("dicehis-button").className = "btn btn-info";
         document.getElementById("voucherhis-button").className = "btn btn-success";
         document.getElementById("presenthis-button").className = "btn btn-info";
@@ -158,13 +156,11 @@
         vXmlHttpPrizeHistory.onreadystatechange = function () {
             if (vXmlHttpPrizeHistory.status == gREQUEST_STATUS_OK && vXmlHttpPrizeHistory.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK) {
                 var vUserPrizeHistoryObj = JSON.parse(vXmlHttpPrizeHistory.responseText);
-                console.log(vUserPrizeHistoryObj);
                 handleVoucherHistory(vUserPrizeHistoryObj);
             }
         }
     }
     function onBtnDiceHistoryClick() {
-        console.log("Nút Dice History được ấn");
         document.getElementById("dicehis-button").className = "btn btn-success";
         document.getElementById("voucherhis-button").className = "btn btn-info";
         document.getElementById("presenthis-button").className = "btn btn-info";
@@ -179,13 +175,11 @@
         vXmlHttpDiceHistory.onreadystatechange = function () {
             if (vXmlHttpDiceHistory.status == gREQUEST_STATUS_OK && vXmlHttpDiceHistory.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK) {
                 var vUserDiceHistoryObj = JSON.parse(vXmlHttpDiceHistory.responseText);
-                console.log(vUserDiceHistoryObj);
                 handleDiceHistory(vUserDiceHistoryObj);
             }
         }
     }
     function onBtnPresentHistoryClick() {
-        console.log("Nút present History được ấn");
         document.getElementById("dicehis-button").className = "btn btn-info";
         document.getElementById("voucherhis-button").className = "btn btn-info";
         document.getElementById("presenthis-button").className = "btn btn-success";
@@ -200,7 +194,6 @@
         vXmlHttpDiceHistory.onreadystatechange = function () {
             if (vXmlHttpDiceHistory.status == gREQUEST_STATUS_OK && vXmlHttpDiceHistory.readyState == gREQUEST_READY_STATUS_FINISH_AND_OK) {
                 var vUserDiceHistoryObj = JSON.parse(vXmlHttpDiceHistory.responseText);
-                console.log(vUserDiceHistoryObj);
                 handlePrizeHistory(vUserDiceHistoryObj);
             }
         }
@@ -214,11 +207,10 @@
             var vNewPrizeCells = vNewRows.insertCell(1);
             vNewNumberCells.innerHTML = i + 1;
             getPrizeInfo(vNewPrizeCells, paramUserPrizeHistoryObj.data[i].prize);
-            //vNewPrizeCells.innerHTML = prizeInfo.name;
         }
     }
     function handleVoucherHistory(paramUserVoucherHistoryObj) {
-
+        
         var vTableBody = document.getElementById("tbody-id");
         vTableBody.innerHTML = "";
         for (var i = 0; i < paramUserVoucherHistoryObj.data.length; i++) {
@@ -226,8 +218,6 @@
             var vNewNumberCells = vNewRows.insertCell(0);
             var vNewDiceCells = vNewRows.insertCell(1);
             getVoucherInfo(vNewNumberCells, vNewDiceCells, paramUserVoucherHistoryObj.data[i].voucher)
-            //vNewNumberCells.innerHTML = paramUserVoucherHistoryObj.data[i].voucher;
-            //vNewDiceCells.innerHTML = paramUserVoucherHistoryObj.data[i].voucher;
         }
     }
     function handleDiceHistory(paramUserDiceHistoryObj) {
@@ -239,7 +229,6 @@
             var vNewDiceCells = vNewRows.insertCell(1);
             vNewNumberCells.innerHTML = i + 1;
             vNewDiceCells.innerHTML = paramUserDiceHistoryObj.data[i].dice;
-
         }
     }
 
@@ -295,54 +284,59 @@
         }
         var vVoucherResult = document.getElementById("p-voucher-id");
         var vDiscountResult = document.getElementById("p-coucher-percent");
+
         if (paramUserDiceObj.voucher !== null) {
-            vVoucherResult.innerHTML = paramUserDiceObj.voucher.maVoucher;
-            vDiscountResult.innerHTML = paramUserDiceObj.voucher.phanTramGiamGia;
+            vVoucherResult.innerHTML = "Mã voucher: " + paramUserDiceObj.voucher.code;
+            vDiscountResult.innerHTML = "Giảm giá: " + paramUserDiceObj.voucher.discount + "%";
         }
         else {
             vVoucherResult.innerHTML = "Không có mã voucher!!"
             vDiscountResult.innerHTML = "không có discount!!"
         }
+
         var vImgPresent = document.getElementById("present-id");
-        var vTenPhanThuong = paramUserDiceObj.prize;
-        switch (vTenPhanThuong) {
-            case "Áo":
-                vImgPresent.src = "LuckyDiceImages/t-shirt.jpg"
-                break;
-            case "Xe máy":
-                vImgPresent.src = "LuckyDiceImages/xe-may.jpg"
-                break;
-            case "Ô tô":
-                vImgPresent.src = "LuckyDiceImages/car.jpg"
-                break;
-            case "Mũ":
-                vImgPresent.src = "LuckyDiceImages/hat.jpg"
-                break;
-            default:
-                vImgPresent.src = "LuckyDiceImages/no-present.jpg"
+        if (paramUserDiceObj.prize !== null) {
+            var vTenPhanThuong = paramUserDiceObj.prize.name;
+            switch (vTenPhanThuong) {
+                case "t-shirt":
+                    vImgPresent.src = "LuckyDiceImages/t-shirt.jpg"
+                    break;
+                case "bike":
+                    vImgPresent.src = "LuckyDiceImages/xe-may.jpg"
+                    break;
+                case "car":
+                    vImgPresent.src = "LuckyDiceImages/car.jpg"
+                    break;
+                case "hat":
+                    vImgPresent.src = "LuckyDiceImages/hat.jpg"
+                    break;
+                default:
+                    vImgPresent.src = "LuckyDiceImages/no-present.jpg"
+            }
+        }
+        else {
+            vImgPresent.src = "LuckyDiceImages/no-present.jpg"
         }
     }
 
-    function getPrizeInfo (paramCell, paramPrizeId) {
-        $.ajax ({
-            url : "/prizes/" + paramPrizeId,
-            method : "GET",
-            success : function (res){
-                console.log(res)
+    function getPrizeInfo(paramCell, paramPrizeId) {
+        $.ajax({
+            url: "/prizes/" + paramPrizeId,
+            method: "GET",
+            success: function (res) {
                 paramCell.innerHTML = res.data.name;
-            } 
+            }
         })
     }
 
-    function getVoucherInfo (paramCellVoucherId,paramCellMaGiamGia, paramVoucherId) {
-        $.ajax ({
-            url : "/vouchers/" + paramVoucherId,
-            method : "GET",
-            success : function (res){
-                console.log(res)
+    function getVoucherInfo(paramCellVoucherId, paramCellMaGiamGia, paramVoucherId) {
+        $.ajax({
+            url: "/vouchers/" + paramVoucherId,
+            method: "GET",
+            success: function (res) {
                 paramCellVoucherId.innerHTML = res.data.code;
                 paramCellMaGiamGia.innerHTML = res.data.discount + "%";
-            } 
+            }
         })
     }
 </script>
