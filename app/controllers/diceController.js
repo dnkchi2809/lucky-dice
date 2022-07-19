@@ -85,7 +85,7 @@ const diceHandler = (request, response) => {
                                 } else {
                                     // Nếu dice > 3, thực hiện lấy random một giá trị voucher bất kỳ trong hệ thống
                                     voucherModel.count().exec((errorCountVoucher, countVoucher) => {
-                                        let randomVoucher = Math.floor(Math.random * countVoucher);
+                                        let randomVoucher = Math.floor(Math.random() * countVoucher);
 
                                         voucherModel.findOne().skip(randomVoucher).exec((errorFindVoucher, findVoucher) => {
                                             // Lưu voucher History
@@ -146,7 +146,8 @@ const diceHandler = (request, response) => {
                         } else {
                             // Nếu dice > 3, thực hiện lấy random một giá trị voucher bất kỳ trong hệ thống
                             voucherModel.count().exec((errorCountVoucher, countVoucher) => {
-                                let randomVoucher = Math.floor(Math.random * countVoucher);
+                                console.log(countVoucher);
+                                let randomVoucher = Math.floor(Math.random() * countVoucher);
 
                                 voucherModel.findOne().skip(randomVoucher).exec((errorFindVoucher, findVoucher) => {
                                     // Lưu voucher History
@@ -202,7 +203,7 @@ const diceHandler = (request, response) => {
                                                             } else {
                                                                 // Nếu đủ điều kiện nhận giải thưởng, tiến hành lấy random 1 prize trong prize Model
                                                                 prizeModel.count().exec((errorCountPrize, countPrize) => {
-                                                                    let randomPrize = Math.floor(Math.random * countPrize);
+                                                                    let randomPrize = Math.floor(Math.random() * countPrize);
 
                                                                     prizeModel.findOne().skip(randomPrize).exec((errorFindPrize, findPrize) => {
                                                                         // Lưu prize History
