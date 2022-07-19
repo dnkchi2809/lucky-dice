@@ -337,6 +337,7 @@
             url: "/vouchers/" + paramVoucherId,
             method: "GET",
             success: function (res) {
+                console.log(res)
                 paramCellVoucherId.innerHTML = res.data.code;
                 paramCellMaGiamGia.innerHTML = res.data.discount + "%";
             }
