@@ -36,7 +36,7 @@ app.use(express.urlencoded({
 }))
 
 //khai báo cổng chạy app
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 mongoose.connect("mongodb://localhost:27017/CRUD_Lucky_Dice", (err) => {    
     if (err) {
@@ -70,6 +70,6 @@ app.use("/", voucherHistoryRouter);
 app.use("/", diceRouter);
 
 // chạy app
-app.listen(process.env.PORT || port, () => {
-    console.log(`app listen on port (app đang chạy)`)
+app.listen(port, () => {
+    console.log(`app listen on port (app đang chạy trên cổng ${port})`)
 })
