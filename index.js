@@ -70,6 +70,6 @@ app.use("/", voucherHistoryRouter);
 app.use("/", diceRouter);
 
 // chạy app
-app.listen(port, () => {
-    console.log(`app listen on port (app đang chạy trên cổng ${port})`)
+app.listen(process.env.PORT || port, () => {
+    console.log(`app listen on port (app đang chạy)`)
 })
