@@ -38,7 +38,7 @@ app.use(express.urlencoded({
 //khai báo cổng chạy app
 const port = process.env.PORT || 8000;
 
-mongoose.connect("mongodb://localhost:27017/CRUD_Lucky_Dice", (err) => {    
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/CRUD_Lucky_Dice", (err) => {    
     if (err) {
         throw err;
     }
