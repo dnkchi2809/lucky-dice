@@ -39,7 +39,7 @@ app.use(express.urlencoded({
 const port = process.env.PORT || 8000;
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/CRUD_Lucky_Dice", 
-{ useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 },(err) => {    
+{ useNewUrlParser: true, useUnifiedTopology: true },(err) => {    
     if (err) {
         throw err;
     }
